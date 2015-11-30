@@ -112,8 +112,29 @@ public class Huffman {
 		BinaryStdOut.close();
 	}
 
-	public static void expand() {
+	private static Node rebuildTrie() {
+		if (BinaryStdIn.readBoolean())
+			return new Node(BinaryStdIn.readChar(), 0, null, null);
+		return new Node('\0', 0, rebuildTrie(), rebuildTrie());
+	}
 
+	private static char parseChar(Node root) {
+		if (root.isLeaf())
+			return root.ch;
+		if (BinaryStdIn.readBoolean())
+			return parseChar(root.right);
+		else
+			return parseChar(root.left);
+	}
+
+	public static void expand() {
+		Node trie = rebuildTrie();
+
+		int length = BinaryStdIn.readInt();
+		for (int i = 0; i < length; i++)
+			BinaryStdOut.write(parseChar(trie));
+		
+		BinaryStdOut.close();
 	}
 
 	public static void main(String[] args) {
