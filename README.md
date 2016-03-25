@@ -2,4 +2,4 @@
 
 There are some algorithm about file-compression.
 
-Java is the perfected language to implement those.
+In first issue I implement Huffman & Lwz algorithm.
