@@ -12,7 +12,7 @@ SRC = $(wildcard $(SRCDIR)/*.cpp)
 SRC_OBJ	= $(SRC:$(SRCDIR)/%.cpp=$(BUILDDIR)/%.o)
 TEST = $(wildcard $(TESTDIR)/*.cpp)
 TEST_OBJ = $(TEST:$(TESTDIR)/%.cpp=$(BUILDDIR)/%.o)
-LIB_A = $(wildcard $(LIB_DIR)/*.a)
+LIB_A = $(wildcard $(LIBDIR)/*.a)
 
 huffman: $(TEST_OBJ) $(SRC_OBJ) $(LIB_A)
 	$(CC) $(CXXFLAG) $^ -o $@ 
