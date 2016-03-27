@@ -3,7 +3,7 @@
 *.lo
 *.o
 *.obj
-test
+build
 
 # Precompiled Headers
 *.gch
@@ -20,7 +20,6 @@ test
 # Compiled Static libraries
 *.lai
 *.la
-*.a
 *.lib
 
 # Executables

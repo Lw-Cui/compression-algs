@@ -1,17 +1,31 @@
-CC		= icc
-CXXFLAG	= -g -O0 -Wall -Wextra -W -std=c++11 
+CC = icc -std=c++11 
+CXXFLAG	= -g -O0 -Wall -Wextra -W -I.
 
-all			: Huffman.out
+LIBDIR = lib
+TESTDIR = test
+SRCDIR	= huffmanSrc
+BUILDDIR = build
+HEADERDIR = huffmanHeader
 
-Huffman.out	: Huffman.o
-	$(CC) $(CXXFLAG) $< -o $@ 
+HEADER = $(wildcard $(HEADERDIR)/*.hpp)
+SRC = $(wildcard $(SRCDIR)/*.cpp)
+SRC_OBJ	= $(SRC:$(SRCDIR)/%.cpp=$(BUILDDIR)/%.o)
+TEST = $(wildcard $(TESTDIR)/*.cpp)
+TEST_OBJ = $(TEST:$(TESTDIR)/%.cpp=$(BUILDDIR)/%.o)
+LIB_A = $(wildcard $(LIB_DIR)/*.a)
 
-Huffman.o	: Huffman.cpp
+huffman: $(TEST_OBJ) $(SRC_OBJ) $(LIB_A)
+	$(CC) $(CXXFLAG) $^ -o $@ 
+
+$(BUILDDIR)/%.o: $(TESTDIR)/%.cpp $(HEADER)
+	@mkdir -p $(BUILDDIR)
+	$(CC) $(CXXFLAG) $< -o $@ -c
+
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(HEADER)
+	@mkdir -p $(BUILDDIR)
 	$(CC) $(CXXFLAG) $< -o $@ -c
 
 clean:
-	rm *.o *.out
+	rm -rf $(BUILDDIR) 
 
 rebuild: clean all
-	
-.PHONY: all clean rebuild
