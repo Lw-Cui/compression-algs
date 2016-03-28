@@ -1,10 +1,12 @@
 #define DEBUG
+#include "qheader/Queue.hpp"
 #include "huffmanHeader/Huffman.hpp"
 #include <iostream>
 #include <queue>
 using namespace ca;
 using namespace std;
 using namespace bit;
+using namespace queue;
 
 Huffman& ca::Huffman_algs() {
 	static Huffman huf;
@@ -37,9 +39,10 @@ std::map<char, int> Huffman::getfrequency(std::ifstream &fin) {
 
 shared_ptr<Node> Huffman::buildtree(const map<char, int>& freq) {
 	auto cmp = [](const shared_ptr<Node> &n1, const shared_ptr<Node>& n2) {
-		return n1->frequency > n2->frequency;
+		return n1->frequency < n2->frequency;
 	};
-	priority_queue<shared_ptr<Node>, 
+	//priority_queue<shared_ptr<Node>, 
+	PriorityQueue<shared_ptr<Node>, 
 		std::vector<shared_ptr<Node>>, decltype(cmp)> que(cmp);
 	for (auto &p: freq)
 		que.push(make_shared<Node>(p.first, p.second));

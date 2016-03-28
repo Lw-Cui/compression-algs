@@ -8,8 +8,12 @@ BUILDDIR = build
 HEADERDIR = huffmanHeader
 BITHEADER = bitheader
 BITDIR = bitsrc
+QHEADER = qheader
 
-HEADER = $(wildcard $(HEADERDIR)/*.hpp) $(wildcard $(BITHEADER)/*.hpp)
+HEADER = $(wildcard $(HEADERDIR)/*.hpp)\
+								  $(wildcard $(BITHEADER)/*.hpp)\
+								  $(wildcard $(QHEADER)/*.hpp)
+
 LIB = $(wildcard $(LIBDIR)/*.a)
 								  
 SRC = $(wildcard $(SRCDIR)/*.cpp)
