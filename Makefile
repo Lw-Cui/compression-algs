@@ -6,16 +6,27 @@ TESTDIR = test
 SRCDIR	= huffmanSrc
 BUILDDIR = build
 HEADERDIR = huffmanHeader
+BITHEADER = bitheader
+BITDIR = bitsrc
 
-HEADER = $(wildcard $(HEADERDIR)/*.hpp)
+HEADER = $(wildcard $(HEADERDIR)/*.hpp) $(wildcard $(BITHEADER)/*.hpp)
+LIB = $(wildcard $(LIBDIR)/*.a)
+								  
 SRC = $(wildcard $(SRCDIR)/*.cpp)
 SRC_OBJ	= $(SRC:$(SRCDIR)/%.cpp=$(BUILDDIR)/%.o)
+
 TEST = $(wildcard $(TESTDIR)/*.cpp)
 TEST_OBJ = $(TEST:$(TESTDIR)/%.cpp=$(BUILDDIR)/%.o)
-LIB_A = $(wildcard $(LIBDIR)/*.a)
 
-huffman: $(TEST_OBJ) $(SRC_OBJ) $(LIB_A)
+BITSRC = $(wildcard $(BITDIR)/*.cpp)
+BIT_OBJ = $(BITSRC:$(BITDIR)/%.cpp=$(BUILDDIR)/%.o)
+
+huffman: $(TEST_OBJ) $(SRC_OBJ) $(BIT_OBJ) $(LIB)
 	$(CC) $(CXXFLAG) $^ -o $@ 
+
+$(BUILDDIR)/%.o: $(BITDIR)/%.cpp $(HEADER)
+	@mkdir -p $(BUILDDIR)
+	$(CC) $(CXXFLAG) $< -o $@ -c
 
 $(BUILDDIR)/%.o: $(TESTDIR)/%.cpp $(HEADER)
 	@mkdir -p $(BUILDDIR)
@@ -28,4 +39,4 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp $(HEADER)
 clean:
 	rm -rf $(BUILDDIR) 
 
-rebuild: clean all
+rebuild: clean huffman
