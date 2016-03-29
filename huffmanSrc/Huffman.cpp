@@ -1,4 +1,3 @@
-#define DEBUG
 #include "qheader/Queue.hpp"
 #include "huffmanHeader/Huffman.hpp"
 #include <iostream>
@@ -21,7 +20,7 @@ Node::Node(int fre, std::shared_ptr<Node> l, std::shared_ptr<Node> n)
 }
 
 
-void Huffman::compress(std::ifstream &fin, bit::obstream &bout) {
+void Huffman::compress(std::istream &fin, bit::obstream &bout) {
 	shared_ptr<Node> root = buildtree(getfrequency(fin));
 	std::map<char, std::vector<bool>> coding;
 	std::vector<bool> v;
@@ -30,7 +29,7 @@ void Huffman::compress(std::ifstream &fin, bit::obstream &bout) {
 	encode(fin, bout, coding);
 }
 
-std::map<char, int> Huffman::getfrequency(std::ifstream &fin) {
+std::map<char, int> Huffman::getfrequency(std::istream &fin) {
 	map<char, int> freq;
 	char c;
 	while (fin >> c) freq[c]++;
@@ -80,7 +79,7 @@ void Huffman::buildtable(shared_ptr<Node> root,
 	}
 }
 
-void Huffman::encode(std::ifstream &fin, bit::obstream &bout, 
+void Huffman::encode(std::istream &fin, bit::obstream &bout, 
 	std::map<char, std::vector<bool>>& coding) {
 	fin.clear();
 	fin.seekg(0, fin.beg);
@@ -90,7 +89,7 @@ void Huffman::encode(std::ifstream &fin, bit::obstream &bout,
 			bout << b;
 }
 
-void Huffman::expand(bit::ibstream& bin, std::ofstream& fout) {
+void Huffman::expand(bit::ibstream& bin, std::ostream& fout) {
 	shared_ptr<Node> root;
 	readtree(bin, root);
 #ifdef DEBUG
@@ -114,7 +113,7 @@ void Huffman::readtree(bit::ibstream& bin, shared_ptr<Node> &root) {
 	}
 }
 
-void Huffman::decode(bit::ibstream &bin, std::ofstream &fout,
+void Huffman::decode(bit::ibstream &bin, std::ostream &fout,
 	std::shared_ptr<Node>root) {
 	if (root->left == nullptr && root->right == nullptr) {
 		fout << root->data;

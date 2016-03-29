@@ -1,5 +1,5 @@
 CC = icc -std=c++11 
-CXXFLAG	= -g -O0 -Wall -Wextra -W -I.
+CXXFLAG	= -g -O2 -Wall -Wextra -W -I. 
 
 LIBDIR = lib
 TESTDIR = test
