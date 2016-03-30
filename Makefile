@@ -1,5 +1,5 @@
 CC = icc -std=c++11 
-CXXFLAG	= -g -O2 -Wall -Wextra -W -I. 
+CXXFLAG	= -g -O0 -Wall -Wextra -W -I. 
 
 LIBDIR = lib
 TESTDIR = test
@@ -11,8 +11,8 @@ BITDIR = bitsrc
 QHEADER = qheader
 
 HEADER = $(wildcard $(HEADERDIR)/*.hpp)\
-								  $(wildcard $(BITHEADER)/*.hpp)\
-								  $(wildcard $(QHEADER)/*.hpp)
+		  $(wildcard $(BITHEADER)/*.hpp)\
+		  $(wildcard $(QHEADER)/*.hpp)
 
 LIB = $(wildcard $(LIBDIR)/*.a)
 								  

@@ -1,24 +1,25 @@
 #ifndef _HUFFMAN_H_
 #define _HUFFMAN_H_
 #include "bitheader/bitstream.hpp"
+#include "huffmanHeader/Compression.hpp"
 #include <iostream>
 #include <vector>
 #include <map>
 #include <memory>
 namespace ca {
-	class Node {
-	public:
-		int frequency;
-		char data;
-		std::shared_ptr<Node> left, right;
-		Node(char, int);
-		Node(int, std::shared_ptr<Node>, std::shared_ptr<Node>);
-	};
 
-	class Huffman {
+	class Huffman: public CompressAlgs {
 	public:
-		void compress(std::istream&, bit::obstream&);
-		void expand(bit::ibstream&, std::ostream&);
+		void compress(std::istream&, bit::obstream&) override;
+		void expand(bit::ibstream&, std::ostream&) override;
+		class Node {
+		public:
+			int frequency;
+			char data;
+			std::shared_ptr<Node> left, right;
+			Node(char, int);
+			Node(int, std::shared_ptr<Node>, std::shared_ptr<Node>);
+		};
 	private:
 		std::map<char, int> getfrequency(std::istream&);
 		std::shared_ptr<Node> buildtree(const std::map<char, int>&);

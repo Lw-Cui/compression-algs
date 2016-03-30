@@ -12,10 +12,10 @@ Huffman& ca::Huffman_algs() {
 	return huf;
 }
 
-Node::Node(char c, int fre):data(c), frequency(fre) {
+Huffman::Node::Node(char c, int fre):data(c), frequency(fre) {
 }
 
-Node::Node(int fre, std::shared_ptr<Node> l, std::shared_ptr<Node> n)
+Huffman::Node::Node(int fre, std::shared_ptr<Node> l, std::shared_ptr<Node> n)
 	:frequency(fre), left(l), right(n) {
 }
 
@@ -36,11 +36,10 @@ std::map<char, int> Huffman::getfrequency(std::istream &fin) {
 	return freq;
 }
 
-shared_ptr<Node> Huffman::buildtree(const map<char, int>& freq) {
+shared_ptr<Huffman::Node> Huffman::buildtree(const map<char, int>& freq) {
 	auto cmp = [](const shared_ptr<Node> &n1, const shared_ptr<Node>& n2) {
 		return n1->frequency < n2->frequency;
 	};
-	//priority_queue<shared_ptr<Node>, 
 	PriorityQueue<shared_ptr<Node>, 
 		std::vector<shared_ptr<Node>>, decltype(cmp)> que(cmp);
 	for (auto &p: freq)
