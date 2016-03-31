@@ -87,17 +87,15 @@ obstream& AdaptiveHuffman::encode(int pos, obstream &bout) {
 	return bout;
 }
 
-int AdaptiveHuffman::findPos(int weight) {
-	int pos = -1;
-	for (int i = 0; i < tree.size(); i++)
-		if (tree[i].weight == weight && pos < i)
-			pos = i;
-	return pos;
+int AdaptiveHuffman::findPos(int pos) {
+	int i = pos;
+	while (i < tree.size() && tree[pos].weight == tree[i].weight) i++;
+	return i - 1;
 }
 
 void AdaptiveHuffman::update(int pos) {
 	while (pos != -1) {
-		int newpos = findPos(tree[pos].weight);
+		int newpos = findPos(pos);
 		if (newpos != pos && newpos != tree[pos].parent) {
 			leaf[tree[newpos].value] = pos;
 			leaf[tree[pos].value] = newpos;
