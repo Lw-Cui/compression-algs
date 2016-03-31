@@ -34,7 +34,7 @@ void AdaptiveHuffman::expand(bit::ibstream& bin, std::ostream& fout) {
 		} else {
 			c = tree[pos].value; 
 		}
-		fout << c;
+		fout << c << flush;
 #ifdef DEBUG
 		cout << c << flush;
 #endif

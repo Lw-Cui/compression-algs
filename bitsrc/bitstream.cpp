@@ -69,6 +69,7 @@ void obstream::close() {
 void obstream::write_buffer() {
 	unsigned long tmp = buffer.to_ulong();
 	fout.write(reinterpret_cast<const char*>(&tmp), sizeof(tmp));
+	fout << flush;
 	buffer.reset();
 }
 
