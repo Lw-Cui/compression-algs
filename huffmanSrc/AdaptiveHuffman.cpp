@@ -1,4 +1,5 @@
 #include "huffmanHeader/AdaptiveHuffman.hpp"
+#include "huffmanHeader/Compression.hpp"
 #include <algorithm>
 #include <queue>
 using namespace ca;

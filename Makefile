@@ -1,4 +1,4 @@
-CC = icc -std=c++11 
+CC = icpc -std=c++11 -gcc-name=g++-4.9
 CXXFLAG	= -g -O0 -Wall -Wextra -W -I. 
 
 LIBDIR = lib

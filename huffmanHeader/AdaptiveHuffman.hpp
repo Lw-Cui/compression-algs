@@ -31,7 +31,5 @@ namespace ca {
 		std::vector<int> leaf;
 		int NYT;
 	};
-
-	AdaptiveHuffman &AdaptiveHuffman_algs();
 }
 #endif

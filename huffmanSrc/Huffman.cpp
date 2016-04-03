@@ -1,4 +1,5 @@
 #include "qheader/Queue.hpp"
+#include "huffmanHeader/Compression.hpp"
 #include "huffmanHeader/Huffman.hpp"
 #include <iostream>
 #include <queue>

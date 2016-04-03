@@ -31,7 +31,5 @@ namespace ca {
 		void readtree(bit::ibstream&, std::shared_ptr<Node>&);
 		void decode(bit::ibstream&, std::ostream&, std::shared_ptr<Node>);
 	};
-
-	Huffman &Huffman_algs();
 }
 #endif
