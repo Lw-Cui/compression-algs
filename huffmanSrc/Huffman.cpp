@@ -8,7 +8,7 @@ using namespace std;
 using namespace bit;
 using namespace queue;
 
-Huffman& ca::Huffman_algs() {
+CompressAlgs& ca::Huffman_algs() {
 	static Huffman huf;
 	return huf;
 }

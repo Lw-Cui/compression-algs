@@ -6,7 +6,7 @@ using namespace ca;
 using namespace std;
 using namespace bit;
 
-AdaptiveHuffman &AdaptiveHuffman_algs() {
+CompressAlgs &ca::AdaptiveHuffman_algs() {
 	static AdaptiveHuffman algs;
 	return algs;
 }
