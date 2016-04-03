@@ -25,8 +25,10 @@ int main(int argc, char *argv[]) {
 		("h,help", "Print help")
 		; 
 		options.parse(argc, argv); 
-		if (options.count("h"))
+		if (options.count("h")) {
 			cout << options.help({""}) << endl; 
+			exit(0);
+		}
 		if (!(options.count("c") ^ options.count("e")))
 			throw OptionException(
 				" You must specify one of the '--compress' or '--expand' options");
