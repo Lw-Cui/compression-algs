@@ -1,6 +1,6 @@
-#include "bitheader/bitstream.hpp"
-#include "huffmanHeader/Compression.hpp"
-#include "cxxopts/cxxopts.hpp"
+#include <bitstream.hpp>
+#include <Compression.hpp>
+#include <cxxopts.hpp>
 #include <fstream>
 #include <string>
 #include <vector>

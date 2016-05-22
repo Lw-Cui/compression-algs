@@ -6,7 +6,7 @@
 using namespace ca;
 using namespace std;
 using namespace bit;
-using namespace queue;
+using namespace que;
 
 CompressAlgs& ca::Huffman_algs() {
 	static Huffman huf;
