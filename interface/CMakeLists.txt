@@ -1,0 +1,2 @@
+ADD_EXECUTABLE(interface interface.cpp)
+TARGET_LINK_LIBRARIES(interface ${COMPRESSION_ALGS_LIBRARIES})

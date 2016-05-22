@@ -1,7 +1,7 @@
 #ifndef _HUFFMAN_H_
 #define _HUFFMAN_H_
-#include "bitheader/bitstream.hpp"
-#include "huffmanHeader/Compression.hpp"
+#include <Compression.hpp>
+#include <bitstream.hpp>
 #include <iostream>
 #include <vector>
 #include <map>

@@ -1,6 +1,6 @@
 #ifndef _COMPRESSION_ALGS_
 #define _COMPRESSION_ALGS_
-#include "bitheader/bitstream.hpp"
+#include <bitstream.hpp>
 namespace ca {
 	class CompressAlgs {
 	public:

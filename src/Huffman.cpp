@@ -1,6 +1,6 @@
-#include "qheader/Queue.hpp"
-#include "huffmanHeader/Compression.hpp"
-#include "huffmanHeader/Huffman.hpp"
+#include <Compression.hpp>
+#include <Huffman.hpp>
+#include <Queue.hpp>
 #include <iostream>
 #include <queue>
 using namespace ca;
@@ -39,7 +39,7 @@ std::map<char, int> Huffman::getfrequency(std::istream &fin) {
 
 shared_ptr<Huffman::Node> Huffman::buildtree(const map<char, int>& freq) {
 	auto cmp = [](const shared_ptr<Node> &n1, const shared_ptr<Node>& n2) {
-		return n1->frequency < n2->frequency;
+		return n1->frequency > n2->frequency;
 	};
 	PriorityQueue<shared_ptr<Node>, 
 		std::vector<shared_ptr<Node>>, decltype(cmp)> que(cmp);
