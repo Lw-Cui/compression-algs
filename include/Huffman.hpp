@@ -10,8 +10,9 @@ namespace ca {
 
 	class Huffman: public CompressAlgs {
 	public:
-		void compress(std::istream&, bit::obstream&) override;
-		void expand(bit::ibstream&, std::ostream&) override;
+		void compress(std::istream&, bit::oBaseStream&) override;
+		void expand(bit::iBaseStream&, std::ostream&) override;
+
 		class Node {
 		public:
 			int frequency;
@@ -23,13 +24,13 @@ namespace ca {
 	private:
 		std::map<char, int> getfrequency(std::istream&);
 		std::shared_ptr<Node> buildtree(const std::map<char, int>&);
-		void writetree(bit::obstream&, std::shared_ptr<Node>);
+		void writetree(bit::oBaseStream&, std::shared_ptr<Node>);
 		void buildtable(std::shared_ptr<Node>, std::map<char, std::vector<bool>>&,
 			std::vector<bool>&);
-		void encode(std::istream&, bit::obstream&, std::map<char, std::vector<bool>>&);
+		void encode(std::istream&, bit::oBaseStream&, std::map<char, std::vector<bool>>&);
 
-		void readtree(bit::ibstream&, std::shared_ptr<Node>&);
-		void decode(bit::ibstream&, std::ostream&, std::shared_ptr<Node>);
+		void readtree(bit::iBaseStream&, std::shared_ptr<Node>&);
+		void decode(bit::iBaseStream&, std::ostream&, std::shared_ptr<Node>);
 	};
 }
 #endif

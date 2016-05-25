@@ -18,14 +18,14 @@ namespace ca {
 			void set(int, int);
 		};
 		AdaptiveHuffman();
-		void compress(std::istream&, bit::obstream&) override;
-		void expand(bit::ibstream&, std::ostream&) override;
+		void compress(std::istream&, bit::oBaseStream&) override;
+		void expand(bit::iBaseStream&, std::ostream&) override;
 	private:
 		int findPos(int);
 		void update(int);
 		void insertNew(char);
-		bit::obstream& encode(int, bit::obstream&);
-		bool decode(bit::ibstream&, int&);
+		bit::oBaseStream& encode(int, bit::oBaseStream&);
+		bool decode(bit::iBaseStream&, int&);
 		static const int Alphabet = 512;
 		std::vector<Node> tree;
 		std::vector<int> leaf;

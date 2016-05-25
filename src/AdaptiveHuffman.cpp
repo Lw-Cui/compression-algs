@@ -11,7 +11,7 @@ CompressAlgs &ca::AdaptiveHuffman_algs() {
 	return algs;
 }
 
-void AdaptiveHuffman::compress(std::istream& fin, bit::obstream& bout) {
+void AdaptiveHuffman::compress(std::istream& fin, bit::oBaseStream& bout) {
 	char c;
 	while (fin >> c) {
 #ifdef DEBUG
@@ -27,7 +27,7 @@ void AdaptiveHuffman::compress(std::istream& fin, bit::obstream& bout) {
 	}
 }
 
-void AdaptiveHuffman::expand(bit::ibstream& bin, std::ostream& fout) {
+void AdaptiveHuffman::expand(bit::iBaseStream& bin, std::ostream& fout) {
 	char c; int pos = Alphabet;
 	while (decode(bin, pos)) {
 		if (pos == NYT) {
@@ -66,7 +66,7 @@ void AdaptiveHuffman::Node::set(int v, int p) {
 	value = v; parent = p;
 }
 
-obstream& AdaptiveHuffman::encode(int pos, obstream &bout) {
+oBaseStream& AdaptiveHuffman::encode(int pos, oBaseStream &bout) {
 	stack<bool> coding;
 	int parent = tree[pos].parent;
 	while (parent != -1) {
@@ -115,7 +115,7 @@ void AdaptiveHuffman::update(int pos) {
 	}
 }
 
-bool AdaptiveHuffman::decode(ibstream &bin, int &pos) {
+bool AdaptiveHuffman::decode(iBaseStream &bin, int &pos) {
 #ifdef DEBUG
 	cout << endl;
 #endif
