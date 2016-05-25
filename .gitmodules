@@ -1,9 +1,9 @@
 [submodule "cxxopts"]
 	path = cxxopts
-	url = git@github.com:jarro2783/cxxopts.git
+	url = https://github.com/jarro2783/cxxopts.git
 [submodule "bitstream"]
 	path = bitstream
-	url = git@github.com:Lw-Cui/bitstream.git
+	url = https://github.com/Lw-Cui/bitstream.git
 [submodule "PriorityQueue"]
 	path = PriorityQueue
-	url = git@github.com:Lw-Cui/PriorityQueue.git
+	url = https://github.com/Lw-Cui/PriorityQueue.git
