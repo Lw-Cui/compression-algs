@@ -1,4 +1,5 @@
 #include <bitstream.hpp>
+#include <netstream.hpp>
 #include <Compression.hpp>
 #include <cxxopts.hpp>
 #include <fstream>
@@ -22,6 +23,7 @@ int main(int argc, char *argv[]) {
 		("a,adaptive", "Use adaptive huffman coding")
 		("i,input", "Input file", value<string>())
 		("o,output", "Output file", value<string>()->default_value("Processed.out"))
+		("n,hostname", "hostname", value<string>())
 		("h,help", "Print help")
 		; 
 		options.parse(argc, argv); 
@@ -39,11 +41,16 @@ int main(int argc, char *argv[]) {
 			if (options.count("c")) {
 				ifstream fin(options["input"].as<string>(), ios::in | ios::binary);
 				fin.unsetf(ios_base::skipws);
-				obstream bout(options["output"].as<string>());
-				if (options.count("s")) Huffman_algs().compress(fin, bout);
-				else AdaptiveHuffman_algs().compress(fin, bout);
+				if (options.count("n")) {
+					onstream nout(options["hostname"].as<string>(), 2000);
+					AdaptiveHuffman_algs().compress(fin, nout);
+				} else {
+					obstream bout(options["output"].as<string>());
+					if (options.count("s")) Huffman_algs().compress(fin, bout);
+					else AdaptiveHuffman_algs().compress(fin, bout);
+					bout.close();
+				}
 				fin.close();
-				bout.close();
 			} else {
 				ibstream bin(options["input"].as<string>());
 				ofstream fout(options["output"].as<string>(), ios::out);
