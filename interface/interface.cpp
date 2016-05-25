@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
 				fin.unsetf(ios_base::skipws);
 				if (options.count("n")) {
 					onstream nout(options["hostname"].as<string>(), 2000);
-					AdaptiveHuffman_algs().compress(fin, nout);
+					Huffman_algs().compress(fin, nout);
 				} else {
 					obstream bout(options["output"].as<string>());
 					if (options.count("s")) Huffman_algs().compress(fin, bout);

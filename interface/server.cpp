@@ -10,7 +10,7 @@ using namespace std;
 void startServe(short connfd) {
 	instream nin(connfd);
 	ofstream fout("Recv", ios::out);
-	AdaptiveHuffman_algs().expand(nin, fout);
+	Huffman_algs().expand(nin, fout);
 	fout.close();
 }
 
