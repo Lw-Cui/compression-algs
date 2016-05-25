@@ -1,0 +1,177 @@
+[INCLUDE=presentation]
+Title         : Software Development Practises
+Sub Title     : 课程设计答辩
+Author        : 崔利伟
+Affiliation   : 哈尔滨工业大学
+Email         : cui@hellolw.com
+Reveal Theme  : solarized
+Beamer Theme  : singapore 
+Package       : [UTF8]ctex
+Locale        : Chinese
+
+[TITLE]
+
+## WHAT
+### **做了什么？**
+- {.fragment}一个文件传输工具
+- {.fragment}支持多种文件压缩算法
+- {.fragment}支持网络传输
+- {.fragment}拥有类 Unix 命令行交互
+
+## HOW
+### **怎么做到的？**
+- {.fragment}一个比特流模块
+- {.fragment}一个算法模块
+- {.fragment}一个网络间传输模块
+- {.fragment}一个Json 序列化/反序列模块
+- {.fragment}一个交互模块
+- {.fragment}一个定制的优先队列模块
+
+## WHY
+### **为什么要这么做？**
+- {.fragment}将算法用于真正的工程
+- {.fragment}体会模块化的思想
+- {.fragment}重温OOP 设计
+
+~ Begin Vertical { data-background:Gainsboro }
+
+## 代码展示 CODE SHOW {#vertical}
+
+## First.算法模块
+```java 
+  namespace ca {
+	class CompressAlgs {
+	public:
+		virtual void compress(std::istream&, bit::oBaseStream&) = 0;
+		virtual void expand(bit::iBaseStream&, std::ostream&) = 0;
+	};
+	CompressAlgs &Huffman_algs();
+	CompressAlgs &AdaptiveHuffman_algs();
+}
+
+```
+
+## Second.比特流模块
+
+```java 
+  class iBaseStream {
+	public:
+		iBaseStream():sum{1 << (SIZE - 2)}, cnt{0}, valid{true} {}
+		virtual ~iBaseStream(){}
+		iBaseStream(const iBaseStream &) = delete;
+		iBaseStream(iBaseStream &&) = delete;
+		iBaseStream& operator=(const iBaseStream &) = delete;
+
+		operator bool() {return valid;}
+		iBaseStream &read_bit(bool &);
+		iBaseStream & read_byte(char&);
+
+	protected:
+		virtual void read_buffer() = 0;
+		bool read_bit();
+		char read_byte();
+
+		std::bitset<SIZE> buffer;
+		unsigned long sum;
+		unsigned long cnt;
+		bool valid;
+	};
+
+```
+
+## Third.网络模块
+
+```java
+class NetService {
+public:
+	NetService(int cfd = -1):connfd{cfd} {}
+	NetService(const NetService&) = delete;
+	NetService &operator=(const NetService&) = delete;
+	NetService(const std::string &hostname, int port):connfd{-1} {
+		open_connfd(hostname, port);}
+
+	~NetService() {close(connfd);}
+
+	ssize_t read_str(std::string &str) {
+		str.clear(); rio_read(connfd, str); return str.length();}
+	NetService& write_str(const std::string &str) {rio_write(connfd, str); return *this;}
+
+private:
+	int connfd;
+
+	void open_connfd(const std::string &, int);
+	void rio_write(int fd, const std::string& usrbuf);
+	void rio_read(int fd, std::string &usrbuf);
+};
+```
+
+## Fourth. 定制优先队列
+```java
+	template<typename T, 
+		typename Con = std::vector<MobileAtomic<T>>,
+		typename Cmp = std::less<typename Con::value_type>>
+	class PriorityQueue {
+	private:
+		using read_lock = rbl::read_guard<rbl::RBLock<std::mutex>>;
+		using write_lock = rbl::write_guard<rbl::RBLock<std::mutex>>;
+		static const int BEG = 1;
+	public:
+		friend void swap(PriorityQueue &first, PriorityQueue &second) {
+			using std::swap;
+			// Hope that array and compare have defined their own move constructor
+			swap(first.array, second.array);
+			swap(first.compare, second.compare);
+		}
+		PriorityQueue(const Cmp& c = Cmp()):array{1}, compare{c} {}
+		template <typename InputIt>
+		PriorityQueue(InputIt first, InputIt last, const Cmp& c = Cmp())
+			:PriorityQueue{c} {
+			while (first != last) push(*first++);
+		}
+		~PriorityQueue() {}
+		PriorityQueue(const PriorityQueue &other):array{other.array}, compare{other.compare} {}
+		PriorityQueue(PriorityQueue &&other):PriorityQueue{} {swap(*this, other);}
+		PriorityQueue& operator=(PriorityQueue other) {swap(*this, other); return *this;}
+		T top() {read_lock guard(protector); return array[BEG]; }
+		int size() {read_lock guard(protector); return array.size() - BEG; }
+		bool empty() {read_lock guard(protector); return !size(); }
+		void push(const T& data);
+		void pop();
+	private:
+		void up(size_t index);
+		void down(size_t index);
+		Con array; Cmp compare;
+		rbl::RBLock<std::mutex> protector;
+	};
+}
+#include "Queue.impl.hpp"
+
+```
+## Fifth.交互
+```java
+		bool compress = true;
+		bool adaptive = true;
+		Options options(argv[0], " - command line options");
+		options.add_options() 
+		("c,compress", "Compress file")
+		("e,expand", "Expand compressed file")
+		("s,static", "Use static huffman coding")
+		("a,adaptive", "Use adaptive huffman coding")
+		("i,input", "Input file", value<string>())
+		("o,output", "Output file", value<string>()->default_value("Processed.out"))
+		("n,hostname", "hostname", value<string>())
+		("h,help", "Print help")
+		; 
+		options.parse(argc, argv); 
+		if (options.count("h")) {
+			cout << options.help({""}) << endl; 
+			exit(0);
+		}
+
+```
+
+~ End Vertical
+
+## Thanks for looking :-)
+
+
